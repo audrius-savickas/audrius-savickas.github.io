@@ -11,11 +11,19 @@ h1 {
 h2 {
     font-size: 40px;
 }
+h3 {
+    font-size: 23px;
+}
 form {
     font-size: 35px;
 }
 p {
     font-size: 35px;
+}
+td {
+    border-width: 1px 0px;
+    border-style: solid;
+    border-color: black;
 }
 
 #title {
@@ -79,8 +87,12 @@ p {
     border: 1px solid #a33a3a;
 }
 
-#pizzaEmpty {
-
+#menu {
+    row-gap: 0px;
+    display: inline-block;
+    width: 80%;
+    table-layout: fixed;
+    border-spacing: 0px;
 }
 
 .inputs {
@@ -102,6 +114,36 @@ p {
 .pizzaLabels {
     margin-right: 5px;
     margin-left: 5px
+}
+
+.infoCol {
+    width: auto; 
+}
+.photoCol {
+    column-gap: 0;
+    width: 20%;
+    padding: 15px;
+}
+.pizzaName {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+.pizzaPrice {
+    margin-top: 0px;
+    padding-top: 0px;
+    margin-bottom: 10px;
+}
+.pizzaHeat {
+    vertical-align: middle;
+    font-size: 23px;
+}
+.hotPepper {
+    transform: scale(1);
+    vertical-align: middle;
+}
+.pizzaToppings {
+    margin-top: 15px;
+    margin-bottom: 10px;
 }
 
 [type=radio] {
