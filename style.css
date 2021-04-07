@@ -1,5 +1,6 @@
 
 body {
+    margin-bottom: 100px;
     text-align: center;
     font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
 }
@@ -54,6 +55,10 @@ p {
     font-family: 'Franklin Gothic';
     font-size: 25px; 
     height: 50px;
+    border-radius: 5%;
+    border: 1px solid black;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 #errorList {
@@ -64,12 +69,18 @@ p {
     margin-left: auto; 
     margin-right: auto; 
     width: 300px;
+    opacity: 0;
     text-align: left;
     font-size: 18px;
     padding-top: 10px;
     padding-bottom: 10px;
-    background-color: red;
-    outline: 2px solid black;
+    color: #ba3939;
+    background: #ffe0e0;
+    border: 1px solid #a33a3a;
+}
+
+#pizzaEmpty {
+
 }
 
 .inputs {
@@ -88,6 +99,11 @@ p {
     margin-right: 0px;
 }
 
+.pizzaLabels {
+    margin-right: 5px;
+    margin-left: 5px
+}
+
 [type=radio] {
     position: absolute;
     opacity: 0;
@@ -95,11 +111,12 @@ p {
 
 [type=radio] + img {
     cursor: pointer;
+    transition-duration: 0.2s;
+    transform-origin: 50% 50%;
 }
 
 [type=radio]:checked + img {
-    outline: 2px solid grey;
-    opacity: 20;
-    background-color: lightgray;
-    fill-opacity: 10;
+    transform: scale(1.05);
+    background-color: rgba(211, 211, 211, 0.466);
+    fill-opacity: 10;   
 }

@@ -1,7 +1,13 @@
 let form = document.getElementById("form");
 let submit = document.getElementById("submit")
+let pizzaCount = parseInt(sessionStorage.getItem("pizzaCount"));;
 
 form.addEventListener("submit", onSubmit);
+
+// If page is refreshed but pizzas are created, remove the "No pizzas" message
+if (pizzaCount > 0) {
+    document.getElementById("pizzaEmpty").remove();
+}
 
 function onSubmit(event) {
     event.preventDefault();
@@ -12,7 +18,45 @@ function onSubmit(event) {
     let toppings = document.querySelectorAll("input[type='checkbox']");
     let photos = document.querySelectorAll("input[type='radio']");
 
-    validateData(name, price, heat, toppings, photos);
+    // If new session, set pizzaCount to 0
+    pizzaCount = sessionStorage.getItem("pizzaCount");
+    if (pizzaCount == null) {
+        sessionStorage.setItem("pizzaCount", 0);
+    }
+    pizzaCount = parseInt(sessionStorage.getItem("pizzaCount"));
+
+    if (validateData(name, price, heat, toppings, photos)) {
+        // If a pizza is added and "No pizzas" message is displayed, remove it
+        if (pizzaCount == 0) {
+            document.getElementById("pizzaEmpty").remove();
+        }
+        addPizzaToSessionStorage(name, price, heat, toppings, photos);
+    };
+}
+
+function addPizzaToSessionStorage (name, price, heat, toppings, photos) {
+    sessionStorage.setItem("pizzaCount", pizzaCount+1); // Increment session pizzaCount by 1
+    // If no pizzas in menu, create empty array in session
+    if (sessionStorage.getItem("pizzas") == null) {
+        sessionStorage.setItem("pizzas", JSON.stringify({
+            pizzas: []
+        })); 
+    }  
+    let newPizza = {
+        name: name.value,
+        price: price.value,
+        heat: heat.value,
+        toppings: [
+
+        ],
+        photo: 0
+    }
+    let pizzaStorage = sessionStorage.getItem("pizzas");
+    let pizzas = JSON.parse(pizzaStorage);
+    pizzas.pizzas[pizzaCount] = newPizza;
+    sessionStorage.setItem("pizzas", JSON.stringify(pizzas));
+    pizzaCount++;
+    console.log(sessionStorage);
 }
 
 function validateData (name, price, heat, toppings, photos) {
@@ -47,6 +91,10 @@ function validateData (name, price, heat, toppings, photos) {
         isValid = false;
     }
     if (isValid) {
-
+        errorList.style.opacity = 0;
     }
+    else {
+        errorList.style.opacity = 100;
+    }
+    return isValid;
 }
