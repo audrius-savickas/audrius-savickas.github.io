@@ -9,7 +9,7 @@ if (sessionStorage.getItem("pizzas") != null) {
 form.addEventListener("submit", onSubmit);
 
 
-// If page is refreshed but pizzas are created, remove the "No pizzas" message
+// If page is refreshed but pizzas were created, remove the "No pizzas" message and display menu
 if (pizzaCount > 0) {
     document.getElementById("pizzaEmpty").remove();
     showMenu();
@@ -53,7 +53,7 @@ function onSubmit(event) {
     };
     if (pizzaCount > 0) {
         console.log(selectedPhoto);
-        addtoMenu(name, price, heat, selectedToppings, selectedPhoto);
+        addtoMenu(name, price, heat, selectedToppings, selectedPhoto, pizzaCount-1);
     }
 }
 
@@ -62,7 +62,7 @@ function showMenu () {
     let pizzas = JSON.parse(pizzaStorage).pizzas;
     for (let i = 0; i < pizzas.length; i++) {
         console.log(pizzas[i].photo);
-        addtoMenu(pizzas[i].name, pizzas[i].price, pizzas[i].heat, pizzas[i].toppings, pizzas[i].photo);
+        addtoMenu(pizzas[i].name, pizzas[i].price, pizzas[i].heat, pizzas[i].toppings, pizzas[i].photo, i);
     }
 }
 
@@ -87,7 +87,7 @@ function addPizzaToSessionStorage (name, price, heat, selectedToppings, selected
     sessionStorage.setItem("pizzas", JSON.stringify(pizzas));
 }
 
-function addtoMenu (name, price, heat, selectedToppings, selectedPhoto) {
+function addtoMenu (name, price, heat, selectedToppings, selectedPhoto, pizzaNum) {
     let table = document.getElementById("menu");
     let row = document.createElement("tr");
     let infoCell = document.createElement("td");
@@ -97,6 +97,7 @@ function addtoMenu (name, price, heat, selectedToppings, selectedPhoto) {
     let titleElement = document.createElement("div");
     imgElement.src = selectedPhoto;
 
+    row.id = `pizza${pizzaNum}`;
     infoCell.className = "infoCol";
     photoCell.className = "photoCol";
     titleElement.className = "pizzaTitle";
