@@ -6,7 +6,6 @@ if (sessionStorage.getItem("pizzas") != null) {
     let pizzas = JSON.parse(sessionStorage.getItem("pizzas")).pizzas;
     pizzaCount = pizzas.length;
 }
-
 form.addEventListener("submit", onSubmit);
 
 
@@ -33,16 +32,16 @@ function onSubmit(event) {
         }
     });
     // Get selected photo
-    event.target.elements["pizza"];
     console.log(event.target["pizza"].value);
-    selectedPhoto = `pizza${event.target["pizza"].value}.png`;
+    if (event.target["pizza"].value != "") {
+        console.log("EMPT");
+        selectedPhoto = `pizza${event.target["pizza"].value}.png`;
+    }
+    else {
+        selectedPhoto = "";
+    }
 
     // If new session, set pizzaCount to 0
-    pizzaCount = sessionStorage.getItem("pizzaCount");
-    if (pizzaCount == null) {
-        sessionStorage.setItem("pizzaCount", 0);
-    }
-    pizzaCount = parseInt(sessionStorage.getItem("pizzaCount"));
 
     if (validateData(name, price, selectedToppings)) {
         // If a pizza is added and "No pizzas" message is displayed, remove it
@@ -62,7 +61,7 @@ function showMenu () {
     let pizzaStorage = sessionStorage.getItem("pizzas");
     let pizzas = JSON.parse(pizzaStorage).pizzas;
     for (let i = 0; i < pizzas.length; i++) {
-        console.log("ALIO");
+        console.log(pizzas[i].photo);
         addtoMenu(pizzas[i].name, pizzas[i].price, pizzas[i].heat, pizzas[i].toppings, pizzas[i].photo);
     }
 }
@@ -95,30 +94,28 @@ function addtoMenu (name, price, heat, selectedToppings, selectedPhoto) {
     let photoCell = document.createElement("td");
 
     let imgElement = document.createElement("img");
+    let titleElement = document.createElement("div");
     imgElement.src = selectedPhoto;
 
     infoCell.className = "infoCol";
     photoCell.className = "photoCol";
+    titleElement.className = "pizzaTitle";
 
-    infoCell.innerHTML = `
-        <h2 class="pizzaName">${name}</h2>
-        <h3 class="pizzaPrice">Price: ${price}$</h2>
-    `;
+    titleElement.innerHTML += `<h2 class="pizzaName">${name}</h2>`;
     if (heat >= 1) {
-        infoCell.innerHTML += `<span class="pizzaHeat"> Heat:`;
         for (let i = 0; i < heat; i++) {
-            infoCell.innerHTML += `
-                <img src="hot_pepper.png" class="hotPepper">
-            `;
+            titleElement.innerHTML += `<img src="hot_pepper.png" class="hotPepper">`;
         }
-        infoCell.innerHTML += `</span>`;
     }
+    infoCell.appendChild(titleElement);
+    infoCell.innerHTML += `</div><h3 class="pizzaPrice">Price: ${price}$</h2>`;
     infoCell.innerHTML += `
         <h3 class="pizzaToppings">Toppings:</h3>
         <span class="pizzaHeat">
     `;
     for (let i = 0; i < selectedToppings.length; i++) {
-        infoCell.innerHTML += selectedToppings[i] + "  ";
+        infoCell.innerHTML += selectedToppings[i];
+        if (i + 1 != selectedToppings.length) infoCell.innerHTML += ", ";
     }
     infoCell.innerHTML += `</span>`;
     photoCell.appendChild(imgElement);
@@ -143,7 +140,7 @@ function validateData (name, price, selectedToppings) {
     }
     if (price <= 0) {
         let node = document.createElement("li");
-        node.textContent = "Value has to be positive";
+        node.textContent = "Price has to be positive";
         errorList.appendChild(node);
         isValid = false;
     }

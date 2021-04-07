@@ -24,6 +24,8 @@ td {
     border-width: 1px 0px;
     border-style: solid;
     border-color: black;
+    padding-bottom: 20px;
+    padding-top: 10px;
 }
 
 #title {
@@ -117,29 +119,30 @@ td {
 }
 
 .infoCol {
-    width: auto; 
+    width: 80%; 
 }
 .photoCol {
     column-gap: 0;
     width: 20%;
     padding: 15px;
 }
+.pizzaTitle {
+    overflow: auto;
+}
 .pizzaName {
+    display: inline;
+    position: relative;
     margin-bottom: 0px;
     padding-bottom: 0px;
+}
+.hotPepper {
+    position: relative;
+    left: 10px;
 }
 .pizzaPrice {
     margin-top: 0px;
     padding-top: 0px;
     margin-bottom: 10px;
-}
-.pizzaHeat {
-    vertical-align: middle;
-    font-size: 23px;
-}
-.hotPepper {
-    transform: scale(1);
-    vertical-align: middle;
 }
 .pizzaToppings {
     margin-top: 15px;
