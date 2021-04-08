@@ -67,8 +67,19 @@
             <input id="submit" type="submit" value="Add pizza">
         </form>
         <ul id="errorList"></ul>
-        <h2 id="pizzaMenuText">Your pizza menu</h2>
-        <p id="pizzaEmpty">So far it is totally empty :(</p>
+        <div>
+            <div id="sortDiv">
+                <label for="sortBy">Sort by:</label>
+                <select name="sortBy" id="sortSel" onchange="sortMenu(this)">
+                    <option value="name">Name</option>
+                    <option value="price" >Price</option>
+                    <option value="heat">Heat</option>
+                </select>
+            </div>
+            <h2 id="pizzaMenuText">Your pizza menu</h2>
+        </div>
+        <div id="pizzaEmptyDiv">
+        </div>
         <table id="menu">
         </table>
     </body>

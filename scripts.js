@@ -8,12 +8,7 @@ if (sessionStorage.getItem("pizzas") != null) {
 }
 form.addEventListener("submit", onSubmit);
 
-
-// If page is refreshed but pizzas were created, remove the "No pizzas" message and display menu
-if (pizzaCount > 0) {
-    document.getElementById("pizzaEmpty").remove();
-    showMenu();
-}
+showMenu();
 
 function onSubmit(event) {
     event.preventDefault();
@@ -32,9 +27,7 @@ function onSubmit(event) {
         }
     });
     // Get selected photo
-    console.log(event.target["pizza"].value);
     if (event.target["pizza"].value != "") {
-        console.log("EMPT");
         selectedPhoto = `pizza${event.target["pizza"].value}.png`;
     }
     else {
@@ -50,24 +43,29 @@ function onSubmit(event) {
         }
         addPizzaToSessionStorage(name, price, heat, selectedToppings, selectedPhoto);
         pizzaCount++;
-    };
-    if (pizzaCount > 0) {
-        console.log(selectedPhoto);
         addtoMenu(name, price, heat, selectedToppings, selectedPhoto, pizzaCount-1);
-    }
+    };
 }
 
 function showMenu () {
+    if (pizzaCount > 0) {
+        if (document.getElementById("pizzaEmpty")) {
+            document.getElementById("pizzaEmpty").remove();
+        }
+    }
+    else {
+        showEmptyMenu();
+        return;
+    }
+
     let pizzaStorage = sessionStorage.getItem("pizzas");
     let pizzas = JSON.parse(pizzaStorage).pizzas;
     for (let i = 0; i < pizzas.length; i++) {
-        console.log(pizzas[i].photo);
         addtoMenu(pizzas[i].name, pizzas[i].price, pizzas[i].heat, pizzas[i].toppings, pizzas[i].photo, i);
     }
 }
 
 function addPizzaToSessionStorage (name, price, heat, selectedToppings, selectedPhoto) {
-    sessionStorage.setItem("pizzaCount", pizzaCount+1); // Increment session pizzaCount by 1
     // If no pizzas in menu, create empty array in session
     if (sessionStorage.getItem("pizzas") == null) {
         sessionStorage.setItem("pizzas", JSON.stringify({
@@ -83,13 +81,14 @@ function addPizzaToSessionStorage (name, price, heat, selectedToppings, selected
     };
     let pizzaStorage = sessionStorage.getItem("pizzas");
     let pizzas = JSON.parse(pizzaStorage);
-    pizzas.pizzas[pizzaCount] = newPizza;
+    pizzas.pizzas.push(newPizza);
     sessionStorage.setItem("pizzas", JSON.stringify(pizzas));
 }
 
 function addtoMenu (name, price, heat, selectedToppings, selectedPhoto, pizzaNum) {
     let table = document.getElementById("menu");
     let row = document.createElement("tr");
+    let removeCell = document.createElement("td");
     let infoCell = document.createElement("td");
     let photoCell = document.createElement("td");
 
@@ -98,9 +97,14 @@ function addtoMenu (name, price, heat, selectedToppings, selectedPhoto, pizzaNum
     imgElement.src = selectedPhoto;
 
     row.id = `pizza${pizzaNum}`;
+    removeCell.className = "removeCol";
     infoCell.className = "infoCol";
     photoCell.className = "photoCol";
     titleElement.className = "pizzaTitle";
+
+    removeCell.innerHTML = `
+        <button id="btn${pizzaNum}" class="removeBtn" type="button" onclick="deleteRow(id)">Remove pizza</button>
+    `;
 
     titleElement.innerHTML += `<h2 class="pizzaName">${name}</h2>`;
     if (heat >= 1) {
@@ -121,9 +125,12 @@ function addtoMenu (name, price, heat, selectedToppings, selectedPhoto, pizzaNum
     infoCell.innerHTML += `</span>`;
     photoCell.appendChild(imgElement);
 
+    row.appendChild(removeCell);
     row.appendChild(infoCell);
     row.appendChild(photoCell);
     table.appendChild(row);
+    changeTableIds();
+    sortMenu(document.getElementById("sortSel"));
 }
 
 function validateData (name, price, selectedToppings) {
@@ -158,4 +165,85 @@ function validateData (name, price, selectedToppings) {
         errorList.style.opacity = 100;
     }
     return isValid;
+}
+
+function deleteRow (id) {
+    let tr = document.querySelector(`#${id}`).parentNode.parentNode;
+    tr.parentNode.removeChild(tr);
+    deletePizzaFromSessionStorage(id);
+}
+
+function deletePizzaFromSessionStorage (id) {
+    pizzaNum = id.match(/\d+/)[0];
+    let pizzaStorage = JSON.parse(sessionStorage.getItem("pizzas"));
+    let pizzas = pizzaStorage.pizzas;
+    delete pizzas[pizzaNum];
+    pizzas = pizzas.filter(function (el) {
+        return el != null;
+    });
+    pizzaStorage.pizzas = pizzas;
+    sessionStorage.setItem("pizzas", JSON.stringify(pizzaStorage));
+    pizzaCount--;
+    changeTableIds();
+    if (pizzaCount <= 0) showEmptyMenu();
+}
+
+function changeTableIds (){
+    let rows = document.getElementById("menu").childNodes;
+    for (let i = 1; i < rows.length; i++) {
+        rows[i].firstChild.childNodes[1].id = `btn${i - 1}`;
+        rows[i].id = `pizza${i - 1}`;
+    }
+}
+
+function showEmptyMenu () {
+    const pizzaEmpty = document.createElement("p");
+    pizzaEmpty.id = "pizzaEmpty";
+    pizzaEmpty.innerHTML = "So far it is totally empty :(";
+    document.getElementById("pizzaEmptyDiv").append(pizzaEmpty);
+}
+
+function sortMenu (selectObject) {
+    let value = selectObject.value;
+    let rows, i, x, y, shouldSwitch;
+    let table = document.getElementById("menu");
+    let switching = true;
+    console.log(value);
+    if (value == "name") {
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 0; i < rows.length - 1; i++) {
+                shouldSwitch = false;
+
+                x = rows[i].getElementsByClassName("pizzaName")[0];
+                y = rows[i + 1].getElementsByClassName("pizzaName")[0];
+                console.log(x.innerHTML);
+                console.log(y.innerHTML);
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+            if (shouldSwitch) {
+                /* If a switch has been marked, make the switch
+                and mark that a switch has been done: */
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+        // for (let i = 1; i < rows.length; i++) {
+        //     rowValues[i - 1] = rows[i].childNodes[1].childNodes[0].childNodes[0].innerHTML;
+        // }
+        // rowValues.sort();
+        // for (let i = 1; i < rows. length; i++) {
+        //     rows[i].childNodes[1].childNodes[0].childNodes[0].innerHTML = rowValues[i - 1];
+        // }
+    else if (value == "price") {
+
+    }
+    else if (value == "heat") {
+
+    }
 }

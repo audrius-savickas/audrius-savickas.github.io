@@ -42,12 +42,6 @@ td {
     margin-right: 20px;
 }
 
-#addPizza {
-    margin-top: 20px;
-    height: 35px;
-    font-size: 20px;
-}
-
 #priceSubm {
     width: 80px;
 }
@@ -56,8 +50,20 @@ td {
     width: 50px;
 }
 
+#sortDiv {
+    position: relative;
+    right: 100px;
+    display: inline;
+    align-items:flex-start;
+}
+
 #pizzaMenuText {
+    position: relative;
+    text-align: center;
+    right: 78px;
     margin-top: 150px;
+    display: inline-block;
+    align-self:center;
 }
 
 #submit {
@@ -118,6 +124,20 @@ td {
     margin-left: 5px
 }
 
+.removeBtn {
+    font-family: 'Franklin Gothic';
+    font-size: 25px; 
+
+    border-radius: 5%;
+    border: 1px solid black;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.removeCol {
+    width: 10%;
+    margin-left: 100px;
+}
 .infoCol {
     width: 80%; 
 }
@@ -126,6 +146,11 @@ td {
     column-gap: 0;
     width: 20%;
     padding: 15px;
+}
+.removeButton {
+    margin-top: 20px;
+    height: 35px;
+    font-size: 20px;
 }
 .pizzaTitle {
     overflow: auto;
