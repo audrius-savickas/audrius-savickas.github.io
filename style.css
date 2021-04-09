@@ -7,20 +7,20 @@ body {
     color: rgb(255, 255, 255);
 }
 h1 {
-    font-size: 75px;
+    font-size: 80px;
     margin-bottom: 60px;
 }
 h2 {
-    font-size: 40px;
+    font-size: 45px;
 }
 h3 {
-    font-size: 23px;
+    font-size: 28px;
 }
 form {
-    font-size: 35px;
+    font-size: 40px;
 }
 p {
-    font-size: 35px;
+    font-size: 40px;
 }
 td {
     border-width: 1px 0px;
@@ -128,7 +128,7 @@ td {
 }
 
 .pizzaPhotos {
-    height: 180px;
+    height: 190px;
     margin-top: 15px;
     margin-right: 0px;
 }
