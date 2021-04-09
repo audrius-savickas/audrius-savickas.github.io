@@ -41,7 +41,9 @@ export function addRowToMenu (name, price, heat, selectedToppings, selectedPhoto
         if (i + 1 != selectedToppings.length) infoCell.innerHTML += ", ";
     }
     infoCell.innerHTML += `</span>`;
-    photoCell.appendChild(imgElement);
+    if (selectedPhoto != "") {
+        photoCell.appendChild(imgElement);
+    }
 
     row.appendChild(removeCell);
     row.appendChild(infoCell);

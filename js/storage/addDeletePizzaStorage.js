@@ -1,4 +1,3 @@
-import {pizzaCount} from "../main.js";
 import {sortTableIds} from "../menu/sortMenu.js";
 import {showEmptyMenu} from "../menu/showMenu.js";
 
@@ -36,5 +35,7 @@ export function deletePizzaFromSessionStorage (id) {
     pizzaStorage.pizzas = pizzas;
     sessionStorage.setItem("pizzas", JSON.stringify(pizzaStorage));
     sortTableIds(pizzaNum);
-    if (pizzaCount <= 1) showEmptyMenu();
+    let pizzaCount = pizzas.length;
+    console.log(pizzaCount);
+    if (pizzaCount <= 0) showEmptyMenu();
 }

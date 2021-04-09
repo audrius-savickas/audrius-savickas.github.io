@@ -6,7 +6,7 @@ import {addPizzaToSessionStorage} from "./storage/addDeletePizzaStorage.js";
 
 let form = document.getElementById("form");
 let selSort = document.getElementById("sortSel");
-export let pizzaCount = 0;
+let pizzaCount = 0;
 
 // Get pizza count if session storage is not empty and show menu
 if (sessionStorage.getItem("pizzas") != null) {
@@ -21,6 +21,22 @@ selSort.addEventListener("change", function() {
     sortMenu(this);
 });
 window.deleteRowFromMenu = deleteRowFromMenu; // make the deleteRowFromMenu function global scoped
+
+// Uncheck pizza photo button if clicked on checked photo
+let photos = document.getElementsByName("pizza");
+let setCheck;
+for (let i = 0; i < photos.length; i++) {
+    photos[i].onclick = function(){
+        if (setCheck != this){
+             setCheck = this;
+        }
+        else {
+            this.checked = false;
+            setCheck = null;
+        }
+    }
+}
+
 
 // Function when "add pizza" button is pressed
 function onSubmit(event) {
