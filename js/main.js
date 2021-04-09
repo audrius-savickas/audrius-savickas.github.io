@@ -42,6 +42,7 @@ function onSubmit(event) {
     if (event.target["pizza"].value != "") {
         selectedPhoto = `pizza${event.target["pizza"].value}.png`;
     }
+    else selectedPhoto = "";
 
     // If data is valid, reset the form and add the pizza to menu and session storage
     if (validateData(name, price, selectedToppings)) {
