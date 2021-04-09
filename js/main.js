@@ -10,6 +10,7 @@ let pizzaCount = 0;
 
 // Get pizza count if session storage is not empty and show menu
 if (sessionStorage.getItem("pizzas") != null) {
+    console.log("YRA SESSION");
     let pizzas = JSON.parse(sessionStorage.getItem("pizzas")).pizzas;
     pizzaCount = pizzas.length;
 }

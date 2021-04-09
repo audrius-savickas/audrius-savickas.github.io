@@ -9,10 +9,7 @@ export function addRowToMenu (name, price, heat, selectedToppings, selectedPhoto
     let infoCell = document.createElement("td");
     let photoCell = document.createElement("td");
 
-    let imgElement = document.createElement("img");
     let titleElement = document.createElement("div");
-    imgElement.src = `./img/${selectedPhoto}`;
-    imgElement.alt = "";
 
     row.className = "menuRows";
     row.id = `pizza${pizzaNum}`;
@@ -42,6 +39,9 @@ export function addRowToMenu (name, price, heat, selectedToppings, selectedPhoto
     }
     infoCell.innerHTML += `</span>`;
     if (selectedPhoto != "") {
+        let imgElement = document.createElement("img");
+        imgElement.src = `./img/${selectedPhoto}`;
+        imgElement.alt = "";
         photoCell.appendChild(imgElement);
     }
 
