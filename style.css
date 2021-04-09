@@ -1,7 +1,9 @@
 body {
+    background-image: linear-gradient(110deg,#c719199d 0%, #c5700ec4 100%);
     margin-bottom: 100px;
     text-align: center;
     font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+    color: rgba(255, 255, 255, 0.836);
 }
 h1 {
     font-size: 75px;
@@ -63,7 +65,7 @@ td {
 #pizzaMenuText {
     position: relative;
     text-align: center;
-    right: 80px;
+    right: 84px;
     margin-top: 150px;
     display: inline-block;
     align-self:center;
@@ -107,10 +109,11 @@ td {
 }
 
 .sortElements {
-    font-size: 30px;
+    font-size: 25px;
 }
 
 .inputs {
+    background-color: #ffffff38;
     font-size: 20px;
     height: 15px;
     margin-top: 18px;
@@ -121,9 +124,12 @@ td {
 }
 
 .pizzaPhotos {
-    height: 150px;
+    height: 180px;
     margin-top: 15px;
     margin-right: 0px;
+}
+.pizzaPhotos:hover {
+    transform: scale(1.05);
 }
 
 .pizzaLabels {
@@ -133,31 +139,28 @@ td {
 
 .removeBtn {
     font-family: 'Franklin Gothic';
-    font-size: 25px; 
-
+    font-size: 20px; 
+    height: 60px;
     border-radius: 5%;
     border: 1px solid black;
+    margin-left: 30px;
     padding-left: 15px;
     padding-right: 15px;
 }
 
 .removeCol {
     width: 10%;
-    margin-left: 100px;
 }
 .infoCol {
     width: 80%; 
 }
 .photoCol {
+    height: 257px;
     min-width: 200px;
     column-gap: 0;
     width: 20%;
     padding: 15px;
-}
-.removeButton {
-    margin-top: 20px;
-    height: 35px;
-    font-size: 20px;
+    padding-right: 25px;
 }
 .pizzaTitle {
     overflow: auto;
@@ -178,8 +181,12 @@ td {
     margin-bottom: 10px;
 }
 .pizzaToppings {
-    margin-top: 15px;
+    margin-top: 30px;
     margin-bottom: 10px;
+}
+.menuRows {
+    background-color: #ffffff2a;
+    
 }
 
 [type=radio] {
@@ -195,6 +202,6 @@ td {
 
 [type=radio]:checked + img {
     transform: scale(1.05);
-    background-color: rgba(211, 211, 211, 0.466);
+    background-color: rgba(211, 211, 211, 0.233);
     fill-opacity: 10;   
 }

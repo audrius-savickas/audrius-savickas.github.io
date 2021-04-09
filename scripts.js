@@ -41,6 +41,7 @@ function onSubmit(event) {
         if (pizzaCount == 0) {
             document.getElementById("pizzaEmpty").remove();
         }
+        form.reset();
         addPizzaToSessionStorage(name, price, heat, selectedToppings, selectedPhoto);
         pizzaCount++;
         addtoMenu(name, price, heat, selectedToppings, selectedPhoto, pizzaCount-1);
@@ -94,9 +95,12 @@ function addtoMenu (name, price, heat, selectedToppings, selectedPhoto, pizzaNum
 
     let imgElement = document.createElement("img");
     let titleElement = document.createElement("div");
-    imgElement.src = selectedPhoto;
+    imgElement.src = `./img/${selectedPhoto}`;
+    imgElement.alt = "";
 
+    row.className = "menuRows";
     row.id = `pizza${pizzaNum}`;
+    console.log(row);
     removeCell.className = "removeCol";
     infoCell.className = "infoCol";
     photoCell.className = "photoCol";
@@ -109,7 +113,7 @@ function addtoMenu (name, price, heat, selectedToppings, selectedPhoto, pizzaNum
     titleElement.innerHTML += `<h2 class="pizzaName">${name}</h2>`;
     if (heat >= 1) {
         for (let i = 0; i < heat; i++) {
-            titleElement.innerHTML += `<img src="hot_pepper.png" class="hotPepper">`;
+            titleElement.innerHTML += `<img src="./img/hot_pepper.png" class="hotPepper">`;
         }
     }
     infoCell.appendChild(titleElement);
@@ -167,9 +171,12 @@ function validateData (name, price, selectedToppings) {
 }
 
 function deleteRow (id) {
-    let tr = document.querySelector(`#${id}`).parentNode.parentNode;
-    tr.parentNode.removeChild(tr);
-    deletePizzaFromSessionStorage(id);
+    let ok = confirm("Remove this pizza?");
+    if (ok) {
+        let tr = document.querySelector(`#${id}`).parentNode.parentNode;
+        tr.parentNode.removeChild(tr);
+        deletePizzaFromSessionStorage(id);
+    }
 }
 
 function deletePizzaFromSessionStorage (id) {
