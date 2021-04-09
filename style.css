@@ -2,8 +2,9 @@ body {
     background-image: linear-gradient(110deg,#c719199d 0%, #c5700ec4 100%);
     margin-bottom: 100px;
     text-align: center;
-    font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
-    color: rgba(255, 255, 255, 0.836);
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: rgb(255, 255, 255);
 }
 h1 {
     font-size: 75px;
@@ -29,13 +30,15 @@ td {
     padding-top: 10px;
 }
 
-#title {
+#titleText {
     margin-bottom: 100px;
+    margin-top: 60px;
+    font-size: 90px;
 }
 
 #toppings > label {
     font-size: 20px;
-    font-family: 'Franklin Gothic';
+    font-weight: lighter;
 }
 
 #toppings > input {
@@ -59,7 +62,8 @@ td {
 }
 
 #sortSel {
-    font-size: 20px;
+    font-size: 17px;
+    padding: 2px;
 }
 
 #pizzaMenuText {
@@ -170,6 +174,7 @@ td {
     position: relative;
     margin-bottom: 0px;
     padding-bottom: 0px;
+    font-weight: normal;
 }
 .hotPepper {
     position: relative;
@@ -179,8 +184,10 @@ td {
     margin-top: 0px;
     padding-top: 0px;
     margin-bottom: 10px;
+    font-weight: normal;
 }
 .pizzaToppings {
+    font-weight: normal;
     margin-top: 30px;
     margin-bottom: 10px;
 }
