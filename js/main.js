@@ -45,7 +45,9 @@ function onSubmit(event) {
 
     // If data is valid, reset the form and add the pizza to menu and session storage
     if (validateData(name, price, selectedToppings)) {
-        pizzaCount = JSON.parse(sessionStorage.getItem("pizzas")).pizzas.length;
+        if (sessionStorage.getItem("pizzas")) {
+            pizzaCount = JSON.parse(sessionStorage.getItem("pizzas")).pizzas.length;
+        }
         // If a pizza is added and "No pizzas" message is displayed, remove it
         if (pizzaCount == 0) {
             document.getElementById("pizzaEmpty").remove();

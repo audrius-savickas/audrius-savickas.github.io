@@ -2,16 +2,10 @@ import {addRowToMenu} from "./addRemoveRowMenu.js";
 
 // Function which displays pizza menu: either empty, or with pizzas
 export function showMenu (pizzaCount) {
-    if (pizzaCount > 0) {
-        if (document.getElementById("pizzaEmpty")) {
-            document.getElementById("pizzaEmpty").remove();
-        }
-    }
-    else {
+    if (pizzaCount == 0) {
         showEmptyMenu();
         return;
     }
-
     let pizzaStorage = sessionStorage.getItem("pizzas");
     let pizzas = JSON.parse(pizzaStorage).pizzas;
     for (let i = 0; i < pizzas.length; i++) {
