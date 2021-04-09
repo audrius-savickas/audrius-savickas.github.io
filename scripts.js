@@ -116,7 +116,6 @@ function addtoMenu (name, price, heat, selectedToppings, selectedPhoto, pizzaNum
     infoCell.innerHTML += `</div><h3 class="pizzaPrice">Price: ${price}$</h2>`;
     infoCell.innerHTML += `
         <h3 class="pizzaToppings">Toppings:</h3>
-        <span class="pizzaHeat">
     `;
     for (let i = 0; i < selectedToppings.length; i++) {
         infoCell.innerHTML += selectedToppings[i];
@@ -129,7 +128,7 @@ function addtoMenu (name, price, heat, selectedToppings, selectedPhoto, pizzaNum
     row.appendChild(infoCell);
     row.appendChild(photoCell);
     table.appendChild(row);
-    changeTableIds();
+    sortTableIds();
     sortMenu(document.getElementById("sortSel"));
 }
 
@@ -184,22 +183,26 @@ function deletePizzaFromSessionStorage (id) {
     pizzaStorage.pizzas = pizzas;
     sessionStorage.setItem("pizzas", JSON.stringify(pizzaStorage));
     pizzaCount--;
-    changeTableIds();
+    sortTableIds(pizzaNum);
     if (pizzaCount <= 0) showEmptyMenu();
 }
 
-function changeTableIds (){
+function sortTableIds (pizzaNum){
+    // Iterate through all pizza rows, and if pizza's id is higher than deleted pizza's id, decrement it by 1
     let rows = document.getElementById("menu").childNodes;
     for (let i = 1; i < rows.length; i++) {
-        rows[i].firstChild.childNodes[1].id = `btn${i - 1}`;
-        rows[i].id = `pizza${i - 1}`;
+        let id = rows[i].id.match(/\d+/)[0];
+        if (id > pizzaNum) {
+            rows[i].firstChild.childNodes[1].id = `btn${id - 1}`;
+            rows[i].id = `pizza${id - 1}`;
+        }
     }
 }
 
 function showEmptyMenu () {
     const pizzaEmpty = document.createElement("p");
     pizzaEmpty.id = "pizzaEmpty";
-    pizzaEmpty.innerHTML = "So far it is totally empty :(";
+    pizzaEmpty.innerHTML = "It is empty :(";
     document.getElementById("pizzaEmptyDiv").append(pizzaEmpty);
 }
 
@@ -208,42 +211,42 @@ function sortMenu (selectObject) {
     let rows, i, x, y, shouldSwitch;
     let table = document.getElementById("menu");
     let switching = true;
-    console.log(value);
-    if (value == "name") {
-        while (switching) {
-            switching = false;
-            rows = table.rows;
-            for (i = 0; i < rows.length - 1; i++) {
-                shouldSwitch = false;
-
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 0; i < rows.length - 1; i++) {
+            shouldSwitch = false;
+            if (value == "name") {
                 x = rows[i].getElementsByClassName("pizzaName")[0];
                 y = rows[i + 1].getElementsByClassName("pizzaName")[0];
-                console.log(x.innerHTML);
-                console.log(y.innerHTML);
                 if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
                     shouldSwitch = true;
                     break;
                 }
             }
-            if (shouldSwitch) {
-                /* If a switch has been marked, make the switch
-                and mark that a switch has been done: */
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
+            else if (value == "price") {
+                let x = parseFloat(rows[i].getElementsByClassName("pizzaPrice")[0].innerHTML.match(/\d+.\d*/)[0]);
+                let y = parseFloat(rows[i + 1].getElementsByClassName("pizzaPrice")[0].innerHTML.match(/\d+.\d*/)[0]);
+                //console.log(rows[i].getElementsByClassName("pizzaPrice")[0].innerHTML.match(/\d+.\d*/)[0]);
+                //console.log(`${x}, ${y}`);
+                if (x > y) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+            else if (value == "heat") {
+                let x = rows[i].getElementsByClassName("hotPepper").length;
+                let y = rows[i + 1].getElementsByClassName("hotPepper").length;
+                if (x > y) {
+                    shouldSwitch = true;
+                    break;
+                }
             }
         }
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+        }
     }
-        // for (let i = 1; i < rows.length; i++) {
-        //     rowValues[i - 1] = rows[i].childNodes[1].childNodes[0].childNodes[0].innerHTML;
-        // }
-        // rowValues.sort();
-        // for (let i = 1; i < rows. length; i++) {
-        //     rows[i].childNodes[1].childNodes[0].childNodes[0].innerHTML = rowValues[i - 1];
-        // }
-    else if (value == "price") {
 
-    }
-    else if (value == "heat") {
-
-    }
 }
