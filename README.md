@@ -27,3 +27,7 @@ The website is currently hosted on [GitHub pages](audrius-savickas.github.io)
   * Keep original (oldest to latest) order in sessionStorage  
 
 # Pictures
+![ph1](https://i.imgur.com/6HmuhPH.png)
+![ph2](https://i.imgur.com/11kbDvn.png)
+![ph3](https://i.imgur.com/nQGvNMp.png)
+![ph4](https://i.imgur.com/LRvagfE.png)
