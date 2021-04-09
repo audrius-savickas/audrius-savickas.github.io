@@ -1,3 +1,4 @@
+// Function which checks if form data is valid, otherwise, display error box
 export function validateData (name, price, selectedToppings) {
     let isValid = true;
     let errorList = document.getElementById("errorList");

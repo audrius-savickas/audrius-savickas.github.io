@@ -36,6 +36,5 @@ export function deletePizzaFromSessionStorage (id) {
     sessionStorage.setItem("pizzas", JSON.stringify(pizzaStorage));
     sortTableIds(pizzaNum);
     let pizzaCount = pizzas.length;
-    console.log(pizzaCount);
     if (pizzaCount <= 0) showEmptyMenu();
 }

@@ -2,7 +2,6 @@ import {addRowToMenu} from "./addRemoveRowMenu.js";
 
 // Function which displays pizza menu: either empty, or with pizzas
 export function showMenu (pizzaCount) {
-    console.log(pizzaCount);
     if (pizzaCount == 0) {
         showEmptyMenu();
         return;
